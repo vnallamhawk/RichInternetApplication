@@ -1,0 +1,33 @@
+body
+{
+background-color: grey;
+}
+img
+{
+position:absolute;
+left:19px;
+top:16px;
+width:200px;
+height:60px;
+}
+.header
+{
+text-shadow: 3x 3px black;
+background-color: black;
+color:white;
+text-align:center;
+padding:18px;
+font-weight: bolder;
+font-size:36px;
+border-color:brown;
+} 
+p 
+{
+color:white;
+font-size:20px;
+}
+div
+{
+font-size:24px;
+}
+

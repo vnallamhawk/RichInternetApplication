@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+	<head>
+	<link rel="stylesheet" href="style.css">
+	<style>
+	</style>
+	<title>CAKE FACTORY</title>
+	<div class="header">  <img src="cakeBaby.jpg" alt="Villa à la mode">CAKE BABY</div>
+	<script src="http://code.jquery.com/jquery-2.1.3.js"></script>
+	 <script src="common/ajaxCheat.js"></script>
+	</head>
+	<body>	
+<div id="recipe_list"></div>
+		<div>
+		<p>Enter the recipe for chocolate cake</p><input type="text" id="recipe_choc" name="recipe_choc">
+		<p>Enter the recipe for cookies</p><input type="text" id="recipe_cook" name="recipe_cook">
+		</div>			
+		<button id="submit" value="SUBMIT">SUBMIT</button> 
+	<div id="cakeHook">
+	  </div>  
+		<script>	
+//namespace cakeFactory		
+	(function(cakeFactory) {
+			//Product object definition	
+			cakeFactory.Products  = function(prod) {this.name = prod.name;this.cost= prod.cost;this.per= prod.per;this.supplier=prod.supplier;
+			};
+			//cakefactory object definition
+			cakeFactory.render=function(ingredients,name)//,ingredients_cook,recipe_cho,recipe_coo)
+			{	
+				//accessing the recipe_list div,creating div and printing the name of the recipe
+				var recipe = document.getElementById("recipe_list");
+				var messageDiv = document.createElement("div");
+				messageDiv.innerHTML=name;
+
+				recipe.appendChild(messageDiv);
+				//iterating to ingredients parameter to retrieve the chocolate cake ingredients and cookies
+				$.each(ingredients, function( index, value ) {
+				var recipe = document.getElementById("recipe_list");
+				var messageDiv = document.createElement("div");
+				messageDiv.innerHTML = "<div>" +"Ingredients:" + index +" , " + "Quantity :"+ value + "</div>";
+				recipe.appendChild(messageDiv);
+				});
+			
+			}
+			//object definition for storing the values of Chocolate cake ingredients					
+			cakeFactory.recipe_choc  = function(ingredients) {this.flour = ingredients.Flour;this.sugar= ingredients.Sugar;this.eggs= ingredients.Eggs;
+				this.bakingPowder = ingredients['Baking Powder'];this.bakingSoda = ingredients['Baking Soda'];this.chocoPowder    = ingredients['Chocolate Powder'];
+			}; 			
+			//object definition for storing the values of cookie ingredients
+			cakeFactory.recipe_cook  = function(ingredients) {this.butter = ingredients.Butter;this.flour= ingredients.Flour;this.sugar= ingredients.Sugar;
+				this.eggs= ingredients.Eggs;this.bakingPowder   = ingredients['Baking Powder'];this.chocoChips = ingredients['Chocolate Chips'];
+			}; 		
+			//function for calculating the quantity to be provided by each supplier
+			cakeFactory.Calculation  = function(recipe_choc, recipe_cook,products,chocval,cookval,cakeHook,messageDiv ,arrProds) {
+                var totQtyChoco = [];
+                totQtyChoco.flour           = (recipe_choc.ChocolateCake['flour'] * chocval) + (recipe_cook.Cookie['flour'] * cookval);
+                totQtyChoco.sugar           = (recipe_choc.ChocolateCake['sugar'] * chocval) + (recipe_cook.Cookie['sugar'] * cookval);
+                totQtyChoco.eggs            = (recipe_choc.ChocolateCake['eggs'] * chocval) + (recipe_cook.Cookie['eggs'] * cookval);
+                totQtyChoco.bakingPowder    = (recipe_choc.ChocolateCake['bakingPowder'] * chocval) + (recipe_cook.Cookie['bakingPowder'] * cookval);
+                totQtyChoco.bakingSoda      = (recipe_choc.ChocolateCake['bakingSoda'] * chocval);
+                totQtyChoco.chocoPowder     = (recipe_choc.ChocolateCake['chocoPowder'] * chocval);
+                totQtyChoco.chocoChips      = (recipe_cook.Cookie['chocoChips'] * cookval);
+                totQtyChoco.butter          = (recipe_cook.Cookie['butter'] * cookval);
+
+               
+                var strDisplay  = "";
+                var str    = "";
+                var strCookie    = "";
+                if(chocval > 0 && cookval <= 0){
+                    str    = chocval+" Chocolate cake(s)";
+                }
+                else if(chocval <= 0 && cookval >= 0){
+                    str    = cookval+" cookie(s)";
+                }
+                else if(chocval >= 0 && cookval >= 0){
+                    str    = chocval+" Chocolate cake(s) and " +cookval+" cookie(s)";
+                }
+                if(totQtyChoco.flour > 0){
+                    strDisplay = "<div>The Amount of "+products.flour.name+" from "+products.flour.supplier+" for " + str + " is " + totQtyChoco.flour + " " + products.flour.per+"</div>";
+                }
+                if(totQtyChoco.sugar > 0){
+                    strDisplay += "<div>The Amount of "+products.sugar.name+" from "+products.sugar.supplier+" for " + str + " is " + totQtyChoco.sugar + " " + products.sugar.per +"</div>";
+                }
+                if(totQtyChoco.eggs > 0){
+                    strDisplay += "<div>The Amount of "+products.eggs.name+" from "+products.eggs.supplier+" for " + str + " is " + totQtyChoco.eggs + " " + products.eggs.per +"</div>";
+                }
+                if(totQtyChoco.bakingPowder > 0){
+                    strDisplay += "<div>The Amount of "+products.bakingPowder.name+" from "+products.bakingPowder.supplier+" for " + str + " is " + totQtyChoco.bakingPowder + " " + products.bakingPowder.per +"</div>";
+                }
+                if(totQtyChoco.bakingSoda > 0){
+                    strDisplay += "<div>The Amount of "+products.bakingSoda.name+" from "+products.bakingSoda.supplier+" for " + str + " is " + totQtyChoco.bakingSoda + " " + products.bakingSoda.per +"</div>";
+                }
+                if(totQtyChoco.chocoPowder > 0){
+                    strDisplay += "<div>The Amount of "+products.chocoPowder.name+" from "+products.chocoPowder.supplier+" for " + str + " is " + totQtyChoco.chocoPowder + " " + products.chocoPowder.per +"</div>";
+                }
+                if(totQtyChoco.chocoChips > 0){
+                    strDisplay += "<div>The Amount of "+products.chocoChips.name+" from "+products.chocoChips.supplier+" for " + str + " is " + totQtyChoco.chocoChips + " " + products.chocoChips.per +"</div>";
+                }
+                if(totQtyChoco.butter > 0){
+                    strDisplay += "<div>The Amount of "+products.butter.name+" from "+products.butter.supplier+" for " + str + " is " + totQtyChoco.butter + " " + products.butter.per +"</div>";
+                }
+                messageDiv.innerHTML = strDisplay;
+                cakeHook.appendChild(messageDiv);
+
+				var cost_pete=0;
+				var cost_wholesale=0;
+				//using for looop for getting the key value pairs in the recipe_choc map
+				for (var x in recipe_choc)
+				{
+				var value = recipe_choc[x];
+				for (var y in value)
+				{
+				if(products[y].supplier=="Wholesale Baking")
+				{
+				//calculating the wholesale cost by multiplying with the cost of the corresponding product in the map for cookie
+				cost_wholesale=cost_wholesale+((value[y]*products[y].cost)*chocval);
+				}	
+				if(products[y].supplier=="Pete's Farm Fresh Ingredients")
+				{
+				//calculating the pete cost by multiplying with the cost of the corresponding product in the map for chocolate cake
+				cost_pete=cost_pete+((value[y]*products[y].cost)*chocval);
+				}
+				}
+				}
+				
+
+				for (var x in recipe_cook)
+				{
+				var value = recipe_cook[x];
+				for (var y in value)
+				{				
+				if(products[y].supplier=="Wholesale Baking")
+				{
+				//calculating the wholesale cost by multiplying with the cost of the corresponding product in the map for cookie
+				cost_wholesale=cost_wholesale+((value[y]*products[y].cost)*cookval);
+				}	
+				//checking for the supplier
+				if(products[y].supplier=="Pete's Farm Fresh Ingredients")
+				{
+				//calculating the pete cost by multiplying with the cost of the corresponding product in the map for cookie
+				cost_pete=cost_pete+((value[y]*products[y].cost)*cookval);
+				}
+				}
+				}
+				//accessing cakeHook div and appeding the cost for the recipes
+				var cakeHook = document.getElementById("cakeHook");
+				var messageDiv = document.createElement("div");
+				messageDiv.innerHTML = "<div>" + "Wholesale cost for cookie cake :" + cost_wholesale +"</div><div>" + "Pete Cost for Chocolate Cake :"+ cost_pete + "</div>"+
+				"<div>"+ "Total Cost for both Chocolate cakes and cookies :"+(cost_wholesale+cost_pete)+ "</div>";
+				cakeHook.appendChild(messageDiv);
+			};			
+	})(window.cakeFactory = window.cakeFactory || {});
+      
+	//this is using the standard ajax functionality that returns text
+	var callback = function( text ) {
+        var a1data = JSON.parse(text);
+        var chocval = document.getElementById('recipe_choc').value;
+        var cookval = document.getElementById('recipe_cook').value;
+        var products = {};
+		//initialising array prods for performing the calculation
+        var arrProds = ["flour","sugar","eggs","bakingPowder","bakingSoda","chocoPowder","chocoChips","butter"];
+		//iterating the products array and storing the values
+        for(var j =0;j<arrProds.length;j++){
+            products[arrProds[j]] = new cakeFactory.Products(a1data[0].products[j]);
+        }
+		//map for storing the recipe of chocolate cake
+        var recipe_choc = {}
+        recipe_choc["ChocolateCake"]= new cakeFactory.recipe_choc(a1data[0].recipes[0].ingredients[0]);
+		//map for storing the recipe of cookie
+        var recipe_cook = {}
+        recipe_cook["Cookie"]= new cakeFactory.recipe_cook(a1data[0].recipes[1].ingredients[0]);
+		
+        var cakeHook = document.getElementById("cakeHook");
+        var messageDiv = document.createElement("div");
+        $('#cakeHook').empty();
+		//Invoking the Calculation function which will calculate the required quantities for making chocolate cake and cookies
+        var Calculation = new cakeFactory.Calculation(recipe_choc, recipe_cook, products,chocval,cookval,cakeHook,messageDiv,arrProds);
+			};
+		var renderlist = function( text ) {
+        var a1data = JSON.parse(text);
+		var render = new cakeFactory.render(a1data[0].recipes[0].ingredients[0],a1data[0].recipes[0].name)
+		var render2 = new cakeFactory.render(a1data[0].recipes[1].ingredients[0],a1data[0].recipes[1].name)
+		};		
+		//this function will get called only when the page loads for the first time and recipe list will be rendered 
+		$( document ).ready(function() {
+		ajax.get("a1data.json", renderlist);
+		});
+		//this function will get called when the submit button 
+		document.getElementById("submit").onclick = function() {
+		ajax.get("a1data.json", callback);
+		}
+		</script>	
+	</body>
+</html>

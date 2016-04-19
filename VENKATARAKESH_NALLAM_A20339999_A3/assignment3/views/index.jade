@@ -1,0 +1,12 @@
+extends layout
+block content
+  head
+  body
+    h1  Welcome to #{title}   
+    h3
+      | TEEN CONNECT CHAT APPLICATION IS BUILT ON THE EXPRESS FRAMEWORK. IT MAKES USE OF THE SOCKET SERVICES FOR IMPLEMENTATION OF CHAT BETWEEN
+      | USERS. MANY PEERS CAN JOIN THE SAME CHAT ROOM BY ENTERING THE USERNAME IN THE INDEX PAGE. THE LIST OF USERS WHO ARE CONNECTED TO THE
+      | SOCKET SERVICE CAN BE VIEWED IN THIS APPLICATION
+    form(method='post', ,='', action='')
+      input(type='text', ,id='user', ,='', value='USERNAME', name='name')
+      input(type='submit', ,='', value='SUBMIT')

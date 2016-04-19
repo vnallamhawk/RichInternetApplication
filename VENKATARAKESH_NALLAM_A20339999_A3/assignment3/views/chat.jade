@@ -1,0 +1,65 @@
+extends layout
+block content	
+  head
+    style.
+      { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      #chat { padding: 3px; position: absolute; bottom: 0; width: 100%; }
+      #chat input { border: 30; padding: 10px; width: 44%; margin-right: .5%; }
+      #chat button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+      #thumbs { position: absolute; bottom: 3px; right: 566px;background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #logged { position: absolute; bottom: 3px; right: 415px;background: rgb(130, 224, 255); border: none; padding: 10px; }
+    |     
+    title TEEN CONNECT CHAT
+    |     
+    h1  #{heading} 
+    |       
+    |     
+    p#welcome  Connected as #{username} 
+    |    
+    p#titl(style='display:none')  #{username} 
+  |   
+  body
+    ul#messages
+    |     
+    form#chat(action='')
+      input#m(autocomplete='off')
+      button Send
+    |     
+    form(method='post', action='users')
+      input#logged(type='submit', value='LOGGED IN USERS')
+    |     
+    button#thumbs(type='button', onclick='image_add()') THUMBS UP
+    |     
+    script(src='https://cdn.socket.io/socket.io-1.2.0.js')
+    |     
+    script(src='http://code.jquery.com/jquery-1.11.1.js')
+    |     
+    script.
+      var socket = io();
+      $('#chat').submit(function(){
+      var username  = document.getElementById('titl').innerText;
+      var message = $('#m').val();
+      var finall=username + ":" + message;
+      socket.emit('chat message', finall);
+      $('#m').val('');
+      return false;
+      });
+      socket.on('chat message', function(msg){
+      if(msg=="image")
+      {
+      $('#messages').append($('<img src="images/thumbs.jpg"/>'));
+      }
+      else
+      {
+      $('#messages').append($('<li>').text(msg));
+      }
+      });
+      function image_add()
+      {
+      var msg="image";
+      socket.emit('chat message', msg);
+      }

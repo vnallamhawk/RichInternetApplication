@@ -1,0 +1,17 @@
+extends layout
+block content	
+  head
+    script(src='/javascripts/jquery-1.11.2.min.js')
+  body
+    h1 #{main}
+    |     
+    h2 #{heading}
+    |   
+    p#user
+  script.
+    var rankArray = !{usernames};
+    $("#user").append("<ul>");
+    for(var i = 1; i < rankArray.length; i++) {
+    $("#user").append("<li>"+rankArray[i].name+"</li>");
+    }
+    $("#user").append("</ul>");
