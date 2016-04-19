@@ -1,0 +1,29 @@
+4 a)html id:yucs-sprop_button
+html classes:yucs-action_btn yucs-button_theme yucs-vsearch-button
+
+b)URL:https://4.base.maps.api.here.com/maptile/2.1/maptile/newest/normal.day/10/264/379/256/png8?lg=ENG&token=TrLJuXVK62IQk0vuXFzaig%3D%3D&requestid=yahoo.prod&app_id=eAdkWGYRoc4RfxVo0Z4B
+
+  URL:https://4.base.maps.api.here.com/maptile/2.1/maptile/newest/normal.day/10/259/380/256/png8?lg=ENG&token=TrLJuXVK62IQk0vuXFzaig%3D%3D&requestid=yahoo.prod&app_id=eAdkWGYRoc4RfxVo0Z4B
+
+c)
+When the entire code was pasted into console, the following output got displayed
+now a string transformed!
+undefined 
+
+When the code was pasted line by line into the console, the following output got displayed
+var myVariable = 7; 
+undefined
+
+myVariable = "now a string"; 
+"now a string"
+
+function aTransformation(input) { (function(output) { console.log(output + " transformed!") })(input);
+Uncaught SyntaxError: Unexpected end of input
+
+var log = "demo"; }
+Uncaught SyntaxError: Unexpected token }
+
+aTransformation(myVariable); 
+now a string transformed!
+undefined
+	

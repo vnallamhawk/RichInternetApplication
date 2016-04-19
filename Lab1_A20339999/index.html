@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+ <title>VILLA À LA MODE </title>
+   <div class="header">  <img src="villa.jpg" alt="Villa à la mode">Villa à la mode- An Home away from Home</div>
+</head>
+<body>
+<nav>
+ <ul>
+  <li><a href="index.html">Home</a> </li>
+  <li><a href="about.html">About</a> </li>
+  <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav> 
+<article>
+<div id="content">
+ <p>
+"Villa à la mode" guest house is an unique group of folks who change a bitter business to a better business.
+We know that this approach makes a lasting difference, because it has been a cornerstone of our hard work.
+Our values of professionalism, respect and perseverance are an integral part of everything we do.
+We focus on the client's who truly believe in us.
+At the end of the day, we make sure Everything is fine.
+</p>
+</div>
+</article>
+<div id="dropdown">SELECT THE CUSTOMERS WHOSE DETAILS MUST BE DISPLAYED :
+<select id="cust_drop" onchange="changed()">
+ <option value="0" >Select the Customer</option>
+  <option value="1" >Maria</option>
+  <option value="2">Prakash</option>
+   <option value="3">Rakesh</option>
+</select>
+</div>
+<div id="custdetails"></div>
+<div id="footer">
+<p><span>Copyright 2015</span></p>
+</div>
+<script>
+//SECTION 3
+//This is a section about customer
+var id="A20339999";
+var name="Maria Gonzalez";
+var loan=true;
+var amount=66000;
+var amount_new;
+
+//SECTION 3 AND 5 
+function ModifyAccount(modifier)
+{
+amount_new=amount+modifier;
+if(amount_new>0)
+{
+amount=amount+modifier;
+return true;
+}else
+return false;
+}
+ModifyAccount(1000);
+ModifyAccount(-68000);
+console.log(amount);
+
+
+/*
+SECTION 4
+Three customers stored
+using maps in the form
+of key value pairs
+*/
+
+var customer1= {"id": "A20339997", "name":"Maria Gonzalez","loan":true,"amount":66000 };
+var customer2={"id": "A20339998", "name":"Prakash Babu","loan":false,"amount":10000};
+var customer3={"id": "A20339999", "name":"Rakesh Nallam","loan":true,"amount":70000};
+var printOut=function(customerMap) {
+if(customerMap.id=="A20339997")
+return "CUSTOMER ID:"+customer1.id +"<br>"+"CUSTOMER NAME:"+customer1.name +"<br>"+"LOAN:"+ customer1.loan +"<br>"+"AMOUNT:"+ customer1.amount;
+if(customerMap.id=="A20339998")
+return "CUSTOMER ID:"+customer2.id +"<br>"+"CUSTOMER NAME:"+customer2.name +"<br>"+"LOAN:"+ customer2.loan +"<br>"+"AMOUNT:"+ customer2.amount;
+if(customerMap.id=="A20339999")
+return "CUSTOMER ID:"+customer3.id +"<br>"+"CUSTOMER NAME:"+customer3.name +"<br>"+"LOAN:"+ customer3.loan +"<br>"+"AMOUNT:"+ customer3.amount;
+}
+var allCustomers=[customer1, customer2, customer3];
+
+var divid= document.getElementById("custdetails");
+function changed() {
+	if (document.getElementById("cust_drop").value == "0")	
+        divid.style.display='none';  
+    if (document.getElementById("cust_drop").value == "1")
+	{
+	    divid.style.display='block';
+        divid.innerHTML = printOut(allCustomers[0]); 
+		}
+    if (document.getElementById("cust_drop").value == "2")
+	{
+		divid.style.display='block';
+        divid.innerHTML = printOut(allCustomers[1]);  
+	}		
+	if (document.getElementById("cust_drop").value == "3")	
+	{
+		divid.style.display='block';
+        divid.innerHTML = printOut(allCustomers[2]);  
+	}		
+}
+
+//SECTION-5 function for appending content to footer
+function setup()
+{
+var footer=document.getElementById("footer");
+var para = document.createElement("p");
+var new_content = document.createTextNode("Site created by "+customer3.name);
+para.appendChild(new_content);
+footer.appendChild(para);
+}
+for(i=0;i<4;i++)
+{
+setup();
+}
+</script>
+</body>
+
+</html>
